@@ -62,7 +62,6 @@ function dealCards() {
         for (key in response.data) {            
              for (list in arr[key]) {
                 for (article of arr[key][list]) {
-                    console.log(arr[key][list][article])
                     let card = cardMaker(article.authorName,article.authorPhoto, article.headline);
                     cardContainer.appendChild(card)
                 }

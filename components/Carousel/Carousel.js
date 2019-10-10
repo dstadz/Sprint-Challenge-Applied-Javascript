@@ -17,3 +17,58 @@
     <div class="right-button"> > </div>
   </div>
 */
+const carouselContainer = document.querySelector('.carousel-container');
+
+function carousel() {
+  //create elements
+  const carousel = document.createElement('div');
+  const left = document.createElement('div');
+  const right = document.createElement('div');
+  const mountains = document.createElement('img');
+  const computer = document.createElement('img');
+  const trees = document.createElement('img');
+  const turntable = document.createElement('img');
+
+  const display = document.createElement('div')
+  const arr = [mountains,computer,trees,turntable]
+  let i = 0;
+
+  //add classes
+  carousel.classList.add('carousel')
+  left.classList.add('left-button')
+  right.classList.add('right-button')
+  display.classList.add('display')
+
+  //nesting elements
+  carouselContainer.appendChild(carousel);
+  carousel.appendChild(left)
+  carousel.appendChild(display)
+  carousel.appendChild(right)
+  display.appendChild(arr[0])
+
+  //add sources
+  mountains.src = './assets/carousel/mountains.jpeg'
+  computer.src = './assets/carousel/computer.jpeg'
+  trees.src = './assets/carousel/trees.jpeg'
+  turntable.src = './assets/carousel/turntable.jpeg'
+
+  //add event listeners
+  left.addEventListener('click', (event) =>{
+    display.removeChild(arr[i])
+     i == 0 ? i = 3 : i--;
+     console.log(i)
+    display.appendChild(arr[i])
+  })
+  right.addEventListener('click',(event) =>{
+    display.removeChild(arr[i])
+     i == 3 ? i = 0 : i++
+     console.log(i)
+    display.appendChild(arr[i])
+  })
+}
+carousel()
+
+
+
+
+
