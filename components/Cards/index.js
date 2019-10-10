@@ -22,7 +22,7 @@ function dealCards() {
 
     const cardContainer = document.querySelector('.card-container');
 
-    function cardMaker(content){
+    function cardMaker(name, photo, title){
         //create main card div
         let newcard = document.createElement('div');
         newcard.classList.add('card');
@@ -39,23 +39,37 @@ function dealCards() {
         author.classList.add('author');
         imgContainer.classList.add('img-container')
 
-        //nesting classes
+        //nesting elements
         newcard.appendChild(headline)
         newcard.appendChild(author)
         author.appendChild(imgContainer)
         author.appendChild(span)
         imgContainer.appendChild(img)
 
-        return newcard
-    }
+        //add text content
+        headline.textContent(title)
+        span.textContent(`By ${name}`)
+        img.textContent(photo)
 
-
-
-
-        newcard.textContent = content;
-        
         return newcard;
     }
+
+    
+    axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then( response => {
+        console.log(response.data.articles)
+        response.data.articles.bootstrap.forEach( topic => {
+            console.log(topic)
+            topic.forEach( item => {
+                let card = cardMaker(item);
+                cardContainer.appendChild(card);
+            })
+        })
+    })
+    .catch( err => {
+        console.log("Error:", err);
+    })
+    
 
 }
 dealCards()
