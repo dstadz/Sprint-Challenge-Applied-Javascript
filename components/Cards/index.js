@@ -17,3 +17,59 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+function dealCards() {
+
+    const cardContainer = document.querySelector('.card-container');
+
+    function cardMaker(name, photo, title){
+        //create main card div
+        let newcard = document.createElement('div');
+        newcard.classList.add('card');
+
+        //create headline & author
+        let headline = document.createElement('div');
+        let author = document.createElement('div');
+        let imgContainer = document.createElement('div');
+        let img = document.createElement('img');
+        let span = document.createElement('span');
+
+        //add relevant classes
+        headline.classList.add('headline');
+        author.classList.add('author');
+        imgContainer.classList.add('img-container')
+
+        //nesting elements
+        newcard.appendChild(headline)
+        newcard.appendChild(author)
+        author.appendChild(imgContainer)
+        author.appendChild(span)
+        imgContainer.appendChild(img)
+
+        //add text content
+        headline.textContent(title)
+        span.textContent(`By ${name}`)
+        img.textContent(photo)
+
+        return newcard;
+    }
+
+    
+    axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then( response => {
+        console.log(response.data.articles)
+        response.data.articles.bootstrap.forEach( topic => {
+            console.log(topic)
+            topic.forEach( item => {
+                let card = cardMaker(item);
+                cardContainer.appendChild(card);
+            })
+        })
+    })
+    .catch( err => {
+        console.log("Error:", err);
+    })
+    
+
+}
+dealCards()
